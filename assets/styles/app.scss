@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.stubborn-footer {
+  background-color: #212529;
+  color: #ffffff;
+}
+
+.stubborn-footer a {
+  color: #ffffff;
+}

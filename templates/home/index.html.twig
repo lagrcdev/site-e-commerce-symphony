@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stubborn | Don't compromise on your look{% endblock %}
+
+{% block body %}
+    <div class="row g-3 mb-5">
+        {% for sweatShirt in sweatShirts %}
+            <div class="col-12 col-md-4">
+                <div class="card h-100">
+                    <img src="{{ asset('images/produits/' ~ sweatShirt.imageFilename) }}" class="card-img-top" alt="{{ sweatShirt.name }}">
+                    <div class="card-body">
+                        <p class="mb-1">Nom : {{ sweatShirt.name }}</p>
+                        <p class="mb-2">Prix : {{ sweatShirt.price }} €</p>
+                        {% if app.user %}
+                            <a href="{{ path('app_product_show', {id: sweatShirt.id}) }}" class="btn btn-primary">VOIR</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="border-top pt-4">
+        <h2 class="h5">Informations de la société</h2>
+        <p>Stubborn est une marque de sweat-shirts basée à Londres. Notre slogan : « Don't compromise on your look ».</p>
+    </div>
+{% endblock %}

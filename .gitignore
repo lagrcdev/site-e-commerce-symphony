@@ -12,6 +12,9 @@
 # Fichiers fournis avec l'enonce (wireframes, visuels sources) - pas du code du site
 /ressources-fournies/
 
+# maildev (npm, utilise uniquement pour tester les emails en local)
+/node_modules/
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 /.phpunit.cache/
@@ -21,3 +24,7 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> symfonycasts/sass-bundle ###
+/public/assets/
+###< symfonycasts/sass-bundle ###

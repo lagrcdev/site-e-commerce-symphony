@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier | Stubborn{% endblock %}
+
+{% block body %}
+    {% for ligne in lignes %}
+        <div class="card mb-3">
+            <div class="card-body row align-items-center">
+                <div class="col-3 col-md-2">
+                    <img src="{{ asset('images/produits/' ~ ligne.sweatShirt.imageFilename) }}" class="img-fluid" alt="{{ ligne.sweatShirt.name }}">
+                </div>
+                <div class="col-3 col-md-3">Nom : {{ ligne.sweatShirt.name }}</div>
+                <div class="col-3 col-md-2">Prix : {{ ligne.sweatShirt.price }} €</div>
+                <div class="col-3 col-md-2">Taille : {{ ligne.size }}</div>
+                <div class="col-12 col-md-3 mt-2 mt-md-0 text-md-end">
+                    <form method="post" action="{{ path('app_cart_remove', {cle: ligne.cle}) }}">
+                        <button type="submit" class="btn btn-outline-danger">RETIRER DU PANIER</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endfor %}
+
+    {% if lignes|length > 0 %}
+        <div class="d-flex flex-wrap gap-2 align-items-center mt-4">
+            <div class="border rounded px-3 py-2">TOTAL : {{ total }} €</div>
+            <a href="{{ path('app_checkout') }}" class="btn btn-danger">FINALISER MA COMMANDE</a>
+            <a href="{{ path('app_products') }}" class="btn btn-outline-success">CONTINUER MES ACHATS</a>
+        </div>
+    {% else %}
+        <a href="{{ path('app_products') }}" class="btn btn-outline-success mt-3">CONTINUER MES ACHATS</a>
+    {% endif %}
+{% endblock %}
