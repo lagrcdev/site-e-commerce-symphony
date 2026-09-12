@@ -14,6 +14,7 @@
                 <div class="col-3 col-md-2">Taille : {{ ligne.size }}</div>
                 <div class="col-12 col-md-3 mt-2 mt-md-0 text-md-end">
                     <form method="post" action="{{ path('app_cart_remove', {cle: ligne.cle}) }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('cart_remove') }}">
                         <button type="submit" class="btn btn-outline-danger">RETIRER DU PANIER</button>
                     </form>
                 </div>
