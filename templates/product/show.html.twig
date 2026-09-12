@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ sweatShirt.name }} | Stubborn{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <img src="{{ asset('images/produits/' ~ sweatShirt.imageFilename) }}" class="img-fluid" alt="{{ sweatShirt.name }}">
+        </div>
+        <div class="col-12 col-md-6">
+            <p>Nom : {{ sweatShirt.name }}</p>
+            <p>Prix : {{ sweatShirt.price }} €</p>
+
+            <form method="post" action="{{ path('app_cart_add', {id: sweatShirt.id}) }}">
+                <div class="mb-3">
+                    <label for="taille" class="form-label">Taille</label>
+                    <select name="taille" id="taille" class="form-select">
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M" selected>M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('cart_add') }}">
+                <button type="submit" class="btn btn-primary">AJOUTER AU PANIER</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

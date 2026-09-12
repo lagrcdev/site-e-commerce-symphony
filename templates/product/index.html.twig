@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique | Stubborn{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 col-md-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h6">Fourchette de prix</h2>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="{{ path('app_products') }}" class="{% if fourchette is null %}fw-bold{% endif %}">Tous les prix</a></li>
+                        <li><a href="{{ path('app_products', {prix: '10-29'}) }}" class="{% if fourchette == '10-29' %}fw-bold{% endif %}">10 à 29 €</a></li>
+                        <li><a href="{{ path('app_products', {prix: '29-35'}) }}" class="{% if fourchette == '29-35' %}fw-bold{% endif %}">29 à 35 €</a></li>
+                        <li><a href="{{ path('app_products', {prix: '35-50'}) }}" class="{% if fourchette == '35-50' %}fw-bold{% endif %}">35 à 50 €</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-9">
+            <div class="row g-3">
+                {% for sweatShirt in sweatShirts %}
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="{{ asset('images/produits/' ~ sweatShirt.imageFilename) }}" class="card-img-top" alt="{{ sweatShirt.name }}">
+                            <div class="card-body">
+                                <p class="mb-1">Nom : {{ sweatShirt.name }}</p>
+                                <p class="mb-2">Prix : {{ sweatShirt.price }} €</p>
+                                <a href="{{ path('app_product_show', {id: sweatShirt.id}) }}" class="btn btn-primary">VOIR</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Aucun sweat-shirt dans cette fourchette de prix.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_home') }}" class="d-inline-block mt-4">Retour à l'accueil</a>
+{% endblock %}
