@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Merci pour votre commande | Stubborn{% endblock %}
+
+{% block body %}
+    <h1 class="h4">Merci pour votre commande !</h1>
+    <p>Votre paiement de test a bien ete enregistre. Total : {{ order.total }} €</p>
+
+    <ul>
+        {% for item in order.orderItems %}
+            <li>{{ item.sweatShirt.name }} (taille {{ item.size }}) x{{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_products') }}" class="btn btn-outline-success">Continuer mes achats</a>
+{% endblock %}
