@@ -11,3 +11,13 @@
 
 # Fichiers fournis avec l'enonce (wireframes, visuels sources) - pas du code du site
 /ressources-fournies/
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
