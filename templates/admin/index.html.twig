@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office | Stubborn{% endblock %}
+
+{% block body %}
+    <h1 class="h4 mb-4">Back-Office</h1>
+
+    <div class="card mb-4 border-danger">
+        <div class="card-body">
+            <h2 class="h6">Ajouter un sweat-shirt</h2>
+            <form method="post" action="{{ path('app_admin_add') }}" class="row g-2 align-items-end">
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Nom</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Prix</label>
+                    <input type="number" step="0.01" name="price" class="form-control" required>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Image (nom du fichier)</label>
+                    <input type="text" name="imageFilename" class="form-control" placeholder="exemple.jpg" required>
+                </div>
+                <div class="col-3 col-md-1">
+                    <label class="form-label">Stock XS</label>
+                    <input type="number" name="stockXS" class="form-control" value="10" required>
+                </div>
+                <div class="col-3 col-md-1">
+                    <label class="form-label">Stock S</label>
+                    <input type="number" name="stockS" class="form-control" value="10" required>
+                </div>
+                <div class="col-3 col-md-1">
+                    <label class="form-label">Stock M</label>
+                    <input type="number" name="stockM" class="form-control" value="10" required>
+                </div>
+                <div class="col-3 col-md-1">
+                    <label class="form-label">Stock L</label>
+                    <input type="number" name="stockL" class="form-control" value="10" required>
+                </div>
+                <div class="col-6 col-md-1">
+                    <label class="form-label">Stock XL</label>
+                    <input type="number" name="stockXL" class="form-control" value="10" required>
+                </div>
+                <div class="col-6 col-md-1">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_add') }}">
+                    <button type="submit" class="btn btn-danger w-100">AJOUTER</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% for sweatShirt in sweatShirts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <form method="post" action="{{ path('app_admin_edit', {id: sweatShirt.id}) }}" class="row g-2 align-items-end">
+                    <div class="col-6 col-md-1">
+                        <img src="{{ asset('images/produits/' ~ sweatShirt.imageFilename) }}" class="img-fluid" alt="{{ sweatShirt.name }}">
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="name" class="form-control" value="{{ sweatShirt.name }}" required>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label">Prix</label>
+                        <input type="number" step="0.01" name="price" class="form-control" value="{{ sweatShirt.price }}" required>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <label class="form-label">Image</label>
+                        <input type="text" name="imageFilename" class="form-control" value="{{ sweatShirt.imageFilename }}" required>
+                    </div>
+                    <div class="col-3 col-md-1">
+                        <label class="form-label">Stock XS</label>
+                        <input type="number" name="stockXS" class="form-control" value="{{ sweatShirt.stockXS }}" required>
+                    </div>
+                    <div class="col-3 col-md-1">
+                        <label class="form-label">Stock S</label>
+                        <input type="number" name="stockS" class="form-control" value="{{ sweatShirt.stockS }}" required>
+                    </div>
+                    <div class="col-3 col-md-1">
+                        <label class="form-label">Stock M</label>
+                        <input type="number" name="stockM" class="form-control" value="{{ sweatShirt.stockM }}" required>
+                    </div>
+                    <div class="col-3 col-md-1">
+                        <label class="form-label">Stock L</label>
+                        <input type="number" name="stockL" class="form-control" value="{{ sweatShirt.stockL }}" required>
+                    </div>
+                    <div class="col-6 col-md-1">
+                        <label class="form-label">Stock XL</label>
+                        <input type="number" name="stockXL" class="form-control" value="{{ sweatShirt.stockXL }}" required>
+                    </div>
+                    <div class="col-6 col-md-1 form-check">
+                        <input type="checkbox" name="isFeatured" value="1" class="form-check-input" id="featured{{ sweatShirt.id }}" {% if sweatShirt.isFeatured %}checked{% endif %}>
+                        <label class="form-check-label" for="featured{{ sweatShirt.id }}">Mis en avant</label>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_edit') }}">
+
+                    <div class="col-12 d-flex gap-2 mt-2">
+                        <button type="submit" class="btn btn-outline-primary">MODIFIER</button>
+                    </div>
+                </form>
+
+                <form method="post" action="{{ path('app_admin_delete', {id: sweatShirt.id}) }}" class="mt-2">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_delete') }}">
+                    <button type="submit" class="btn btn-outline-danger">SUPPRIMER</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
