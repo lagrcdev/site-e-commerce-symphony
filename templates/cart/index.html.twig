@@ -25,12 +25,16 @@
     {% endfor %}
 
     {% if lignes|length > 0 %}
-        <div class="d-flex flex-wrap gap-2 align-items-center mt-4">
-            <div class="border rounded px-3 py-2">TOTAL : {{ total }} €</div>
-            <a href="{{ path('app_checkout') }}" class="btn btn-danger">FINALISER MA COMMANDE</a>
+        <div class="d-flex flex-column align-items-end gap-2 mt-4">
+            <div class="d-flex align-items-center gap-2">
+                <div class="border rounded px-3 py-2">TOTAL : {{ total }} €</div>
+                <a href="{{ path('app_checkout') }}" class="btn btn-danger">FINALISER MA COMMANDE</a>
+            </div>
             <a href="{{ path('app_products') }}" class="btn btn-outline-success">CONTINUER MES ACHATS</a>
         </div>
     {% else %}
-        <a href="{{ path('app_products') }}" class="btn btn-outline-success mt-3">CONTINUER MES ACHATS</a>
+        <div class="text-end mt-3">
+            <a href="{{ path('app_products') }}" class="btn btn-outline-success">CONTINUER MES ACHATS</a>
+        </div>
     {% endif %}
 {% endblock %}
