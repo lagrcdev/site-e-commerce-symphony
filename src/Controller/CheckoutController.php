@@ -9,6 +9,7 @@ use App\Service\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -41,8 +42,18 @@ class CheckoutController extends AbstractController
     // Stripe redirige ici quand le paiement (de test) a reussi
     #[Route('/checkout/success', name: 'app_checkout_success')]
     #[IsGranted('ROLE_USER')]
-    public function success(Cart $cart, EntityManagerInterface $entityManager): Response
+    public function success(Request $request, Cart $cart, EntityManagerInterface $entityManager, StripeService $stripeService): Response
     {
+        $sessionId = $request->query->get('session_id');
+
+        // On verifie aupres de Stripe que le paiement a vraiment ete effectue avant
+        // d'enregistrer la commande, plutot que de faire confiance a la simple redirection
+        if (!$sessionId || !$stripeService->verifierPaiement($sessionId)) {
+            $this->addFlash('danger', 'Le paiement n\'a pas pu etre verifie.');
+
+            return $this->redirectToRoute('app_cart');
+        }
+
         $lignes = $cart->getItems();
 
         $order = new Order();
