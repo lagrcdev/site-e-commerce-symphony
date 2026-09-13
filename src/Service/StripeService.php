@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Stripe\Checkout\Session;
+use Stripe\Exception\ApiErrorException;
 use Stripe\Stripe;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
@@ -40,8 +41,21 @@ class StripeService
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => $successUrl,
+            'success_url' => $successUrl . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $cancelUrl,
         ]);
+    }
+
+    // Verifie aupres de Stripe que la session de paiement a bien ete payee
+    public function verifierPaiement(string $sessionId): bool
+    {
+        try {
+            $session = Session::retrieve($sessionId);
+        } catch (ApiErrorException) {
+            // Identifiant de session invalide ou inexistant chez Stripe
+            return false;
+        }
+
+        return $session->payment_status === 'paid';
     }
 }
